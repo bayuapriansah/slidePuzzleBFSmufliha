@@ -1,0 +1,94 @@
+"provider = Microsoft.Jet.OLEDB.4.0;Data Source=" & Application.StartupPath.ToString & "\soni.mdb"
+
+
+#Region "deklarasi_foto"
+    Dim a As New OpenFileDialog
+    Sub bukadialogfoto()
+        Dim PictureLocation As String
+        a.Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|TIFF Files (*.tiff)|*.tiff"
+        PictureLocation = a.FileName
+        Try
+            If a.ShowDialog = Windows.Forms.DialogResult.OK Then
+                PictureBox1.Image = New Bitmap(a.FileName)
+                PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
+            End If
+        Catch ex As Exception
+            Exit Sub
+        End Try
+    End Sub
+    Sub simpanfoto()
+        Try
+            Using sql As New MySqlClient.MySqlCommand("update tbpegawai set FOTO=@FOTO where NIP='" & Replace(Me.TNIP.Text, "'", "''") & "'", Module1.koneksifoto)
+                If a.FileName = Nothing Then
+                    sql.Parameters.Add(New MySqlClient.MySqlParameter("@FOTO", MySqlDbType.LongBlob)).Value = IO.File.ReadAllBytes("kosong.jpg")
+                    MsgBox("Anda belum memilih foto !!", MsgBoxStyle.Information, "Pemberitahuan !!")
+                Else
+                    sql.Parameters.Add(New MySqlClient.MySqlParameter("@FOTO", MySqlDbType.LongBlob)).Value = IO.File.ReadAllBytes(a.FileName)
+                End If
+                sql.ExecuteNonQuery()
+                Module1.koneksifoto.Close()
+            End Using
+        Catch ex As Exception
+            Module1.koneksifoto.Close()
+        End Try
+        Module1.koneksifoto.Close()
+    End Sub
+    Sub ubahfoto()
+        Try
+            Using sql As New MySqlClient.MySqlCommand("update tbpegawai set FOTO=@FOTO where NIP='" & Replace(Me.TNIP.Text, "'", "''") & "'", Module1.koneksifoto)
+                If a.FileName = Nothing Then
+                    sql.Parameters.Add(New MySqlClient.MySqlParameter("@FOTO", MySqlDbType.LongBlob)).Value = IO.File.ReadAllBytes("kosong.jpg")
+                    MsgBox("Anda belum memilih foto !!", MsgBoxStyle.Information, "Message !!")
+                    Exit Sub
+                Else
+                    sql.Parameters.Add(New MySqlClient.MySqlParameter("@FOTO", MySqlDbType.LongBlob)).Value = IO.File.ReadAllBytes(a.FileName)
+                End If
+                sql.ExecuteNonQuery()
+                MessageBox.Show("Foto NIP Pegawai : " & TNIP.Text & " Telah diubah !!", "Data Sukses !!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Module1.koneksifoto.Close()
+                s_rubah_berhasil()
+            End Using
+        Catch ex As Exception
+            Module1.koneksifoto.Close()
+            s_rubah_gagal()
+        End Try
+        Module1.koneksifoto.Close()
+    End Sub
+    Sub carifoto()
+        Try
+            Using sql As New MySqlClient.MySqlCommand("select * from tbpegawai where NAMA like '" & "%" & Replace(TCARI.Text, "'", "''") & "%" & "' or NIP like '" & "%" & Replace(TCARI.Text, "'", "''") & "%" & "'", Module1.koneksifoto)
+                Using dr As MySqlClient.MySqlDataReader = sql.ExecuteReader()
+                    Using dt As New DataTable
+                        dt.Load(dr)
+                        If TCARI.Text = "" Then
+                            kosongkanfoto()
+                            PictureBox1.Image = Nothing
+                        ElseIf dt.Rows.Count <> 1 Then
+                        Else
+                            Dim row As DataRow = dt.Rows(0)
+                            Using ms As New IO.MemoryStream(CType(row(9), Byte()))
+                                Dim img As Image = Image.FromStream(ms)
+                                PictureBox1.Image = img
+                                PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
+                            End Using
+                        End If
+                    End Using
+                End Using
+            End Using
+            Module1.koneksifoto.Close()
+        Catch ex As Exception
+            Module1.koneksifoto.Close()
+        End Try
+        Module1.koneksifoto.Close()
+    End Sub
+
+
+Module Module1
+    Public Function koneksi() As OleDb.OleDbConnection
+
+        Dim con As OleDb.OleDbConnection
+        con = New OleDb.OleDbConnection("provider = Microsoft.Jet.OLEDB.4.0;Data Source=" & Application.StartupPath.ToString & "\database_spp.mdb")
+        Return con
+        con = Nothing
+    End Function
+End Module
