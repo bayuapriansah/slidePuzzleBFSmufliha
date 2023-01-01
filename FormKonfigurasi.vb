@@ -100,7 +100,6 @@ Public Class FormKonfigurasi
                         Else
                             Dim rowsoni As DataRow = dt.Rows(0)
                             Using ms As New IO.MemoryStream(CType(rowsoni(0), Byte()))
-                                'Dim Pic As Image = Image.FromFile(openFile.FileName)
                                 Dim Pic As Image = Image.FromStream(ms)
                                 PictureBox1.Image = New Bitmap(Pic)
                                 PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage

@@ -29,6 +29,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -41,7 +42,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -111,34 +111,92 @@
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FormInformasiPlanet.Designer.vb">
+      <DependentUpon>FormInformasiPlanet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormInformasiPlanet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormKonfigurasi.Designer.vb">
       <DependentUpon>FormKonfigurasi.vb</DependentUpon>
     </Compile>
     <Compile Include="FormKonfigurasi.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="isiNama.Designer.vb">
+      <DependentUpon>isiNama.vb</DependentUpon>
+    </Compile>
+    <Compile Include="isiNama.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="koneksiPuzzle.vb" />
     <Compile Include="mnfrm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="pilihPlanet.Designer.vb">
+      <DependentUpon>pilihPlanet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pilihPlanet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Tile.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TingkatLevel.Designer.vb">
+      <DependentUpon>TingkatLevel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TingkatLevel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Welcome.Designer.vb">
+      <DependentUpon>Welcome.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="FormInformasiPlanet.resx">
+      <DependentUpon>FormInformasiPlanet.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormKonfigurasi.resx">
       <DependentUpon>FormKonfigurasi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="isiNama.resx">
+      <DependentUpon>isiNama.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mnfrm.resx">
       <DependentUpon>mnfrm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pilihPlanet.resx">
+      <DependentUpon>pilihPlanet.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tile.resx">
       <DependentUpon>Tile.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TingkatLevel.resx">
+      <DependentUpon>TingkatLevel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Welcome.resx">
+      <DependentUpon>Welcome.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\matahari.png" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
@@ -153,6 +211,34 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bumi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jupiter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
